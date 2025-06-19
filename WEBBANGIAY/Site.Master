@@ -1,0 +1,95 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WEBBANGIAY.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %></title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <%-- IMPORTANT: This ContentPlaceHolder allows child pages to add content to the <head> section. --%>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" runat="server" href="~/">Website bán giày</a>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Products">Sản phẩm</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Liên hệ</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Login">Đăng nhập</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-left">
+
+                            <h1 id="aspnetTitle">
+                                <img src="Images/logo.png" alt="Logo Web Bán Giày" class="homepage-logo" />
+                            </h1>
+                            <p>Web Bán Giày - Nơi mang đến những sản phẩm giày dép chất lượng và phong cách nhất. Luôn cập nhật xu hướng mới nhất để bạn tự tin thể hiện cá tính.</p>
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <h4>Liên hệ</h4>
+                            <address>
+                                <i class="fa fa-map-marker"></i>Số 126 Nguyễn Thiện Thành - Khóm 4, Phường 5, Thành phố Trà Vinh, tỉnh Trà Vinh<br />
+                                <i class="fa fa-phone"></i>Điện thoại: 084 66 000 99<br />
+                                <i class="fa fa-envelope"></i>Email Hỗ trợ: <a href="mailto:Support@example.com">Support@example.com</a><br />
+                                <i class="fa fa-envelope"></i>Email Marketing: <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+                            </address>
+                        </div>
+                        <%-- Phần "Theo dõi chúng tôi" đã bị xóa khỏi đây --%>
+                    </div>
+                    <hr />
+                    <p class="text-center copyright">&copy; <%: DateTime.Now.Year %> - Võ Hoàng Phú - DK23TTC12 - Web Bán Giày. Mọi quyền được bảo lưu.</p>
+                </div>
+            </footer>
+        </div>
+    </form>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>
