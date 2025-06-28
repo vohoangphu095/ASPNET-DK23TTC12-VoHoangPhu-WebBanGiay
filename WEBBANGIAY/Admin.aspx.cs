@@ -21,6 +21,7 @@ namespace WEBBANGIAY
             if (!IsPostBack)
             {
                 BindProductsGridView();
+                BindUsersGridView();
             }
         }
 
@@ -79,10 +80,46 @@ namespace WEBBANGIAY
             }
         }
 
+
+        private void BindUsersGridView()
+        {
+            string query = "SELECT UserID, Username, LoaiUser, Password FROM dbo.Users";
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    try
+                    {
+                        con.Open();
+                        da.Fill(dt);
+                        gvUsers.DataSource = dt;
+                        gvUsers.DataBind();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        litUserMessage.Text = "<span style='color:red;'>Lỗi SQL khi tải người dùng: " + sqlEx.Message + "</span>";
+                    }
+                    catch (Exception ex)
+                    {
+                        litUserMessage.Text = "<span style='color:red;'>Lỗi chung khi tải người dùng: " + ex.Message + "</span>";
+                    }
+                }
+            }
+        }
+
         protected void gvProducts_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvProducts.PageIndex = e.NewPageIndex;
             BindProductsGridView();
+        }
+
+
+        protected void gvUsers_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvUsers.PageIndex = e.NewPageIndex;
+            BindUsersGridView();
         }
 
         protected void gvProducts_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -151,6 +188,44 @@ namespace WEBBANGIAY
                 }
             }
         }
+
+        // xoa users
+        protected void gvUsers_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int userID = Convert.ToInt32(gvUsers.DataKeys[e.RowIndex].Value);
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                string deleteUserQuery = "DELETE FROM dbo.Users WHERE UserID = @UserID";
+                using (SqlCommand cmd = new SqlCommand(deleteUserQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+                    try
+                    {
+                        con.Open();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            litUserMessage.Text = "<span style='color:green;'>Xóa người dùng thành công!</span>";
+                        }
+                        else
+                        {
+                            litUserMessage.Text = "<span style='color:red;'>Không tìm thấy người dùng để xóa.</span>";
+                        }
+                        BindUsersGridView(); // Rebind the GridView to show updated data
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        litUserMessage.Text = "<span style='color:red;'>Lỗi SQL khi xóa người dùng: " + sqlEx.Message + "</span>";
+                    }
+                    catch (Exception ex)
+                    {
+                        litUserMessage.Text = "<span style='color:red;'>Lỗi chung khi xóa người dùng: " + ex.Message + "</span>";
+                    }
+                }
+            }
+        }
+
         protected void btnAddProductPage_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/AddProduct.aspx"); // Điều hướng đến trang thêm sản phẩm
